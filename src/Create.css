@@ -1,0 +1,62 @@
+.lets-start{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 500px;
+  flex-direction: column;
+}
+.eventpopup {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inset: 0;
+  position: fixed;
+  z-index: 11;
+  flex-direction: column;
+}
+
+.AdscvHeader {
+  padding: 24px 0 24px 0;
+}
+
+.AddDepartment_desc {
+  background: #FFFFFF;
+  border: 1px solid #D0D5DD;
+  border-radius: 10px;
+  height: 550px;
+  width: 500px;
+}
+
+.AddDepartment_desc span{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  font-weight: 700;
+  border-bottom: 1px solid grey;
+}
+
+.addDepartment_form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 505px;
+  border-radius: 10px;
+  margin-top: 2px;
+  color: white;
+  background-color: black;
+}
+
+.img-pl{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 30px;
+}
