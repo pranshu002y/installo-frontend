@@ -34,6 +34,15 @@ function AvatarArea() {
     },[]
     )
 
+    const handleLogout = async () => {
+        console.log('Logging out...');
+        localStorage.removeItem("userName"); // Make sure this matches the item you set during login
+        console.log('User removed from local storage.');
+        navigate('/');
+      };
+      
+
+    
     const navigate = useNavigate();
     return (
 
@@ -45,7 +54,7 @@ function AvatarArea() {
                     <div className='li-av' style={{color: "#8e8e8e"}}>{profiledata && profiledata.name}</div>
                 </div>
                 <div className="profile-switch-and-follow-button">
-                    <p onClick={() => navigate("/homepage/LoginPage")}>Switch</p></div>
+                    <p onClick={handleLogout}>Switch</p></div>
             </div>
             <div style={{margin: "12px 0 12px", display: "flex"}}>
                 <div style={{color: "#8e8e8e"}}>Suggestions for you</div>

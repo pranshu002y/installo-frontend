@@ -2,15 +2,26 @@ import axios from 'axios';
 const url = process.env.INSTA_BACKEND
 export async function loginUser(data) {
     try {
-        const response = await axios.post(`${url}/users/login`, data);
+        const response = await axios.post(`${url}/user/login`, data);
         return response.data;
     } catch (error) {
        return error
     }
 }
+
+export const getimage = async () => {
+    try {
+        const response = await axios.get("http://localhost:5000/api/user/me");
+        return response.data;
+    } catch (error) {
+        return error;
+    }
+};
+
+
 export const getLoginStatus = async () => {
     try {
-        const response = await axios.get("http://localhost:5000/api/users/loggedin");
+        const response = await axios.get("http://localhost:5000/api/user/loggedin");
         return response.data;
     } catch (error) {
         return error;
@@ -19,7 +30,7 @@ export const getLoginStatus = async () => {
 
 export const getUserProfile = async  () =>{
     try {
-        const response = await axios.get("http://localhost:5000/api/users/getalluser");
+        const response = await axios.get("http://localhost:5000/api/user/getalluser");
         return response.data;
     } catch (error) {
         return error;
@@ -42,7 +53,7 @@ export const getItemWithExpiry = (key)=> {
 
 export async function searchUser(userName) {
     try {
-        const response = await axios.post("http://localhost:5000/api/users/searchuser", {userName:userName});
+        const response = await axios.post("http://localhost:5000/api/user/searchuser", {userName:userName});
             return response.data;
     } catch (error) {
         return error

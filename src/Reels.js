@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from "react";
 import "./Search.css"
 import "./reels.css"
+import Navbar from "./Navbar";
 
 const Reels = ()=>{
     
@@ -23,7 +24,16 @@ const handleVideoClick = (event) => {
 };
 
 return (
+  <div>
+<div className="homepage-box-container">
+                <div>
+                    <div className="homepage-navbar">
+                        <Navbar/>
+                    </div>
+                </div>
+        </div>
   <div className="lets">
+    
   <div className="app__videos">
     {reels && reels.map((e)=>{
       return(
@@ -73,6 +83,8 @@ return (
   </div>
   </div>
 
+  </div>
+  
 
         
     )

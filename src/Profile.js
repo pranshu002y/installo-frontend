@@ -1,52 +1,57 @@
 import React, { useEffect, useState } from "react";
 import "./Profile.css";
-import saru from "../src/photos/saru.jpg"
 import Gallery from "../src/Gallery";
 import { useNavigate } from "react-router-dom";
-import Cookies from 'js-cookie';
+import Navbar from "./Navbar";
+import axios from 'axios';
 
-// import Sidebar from '../../Components/Sidebar/Sidebar'
-// import SettingIcon from "../src/Icons/Settingslogo.png"
-// import Explorepost from '../../Components/ExplorePost/Explorepost'
-// import { PostExplore } from '../../Components/data'
 export default function Profile() {
-  const [profiledata,setprofiledata] = useState();
-  const cookieData = Cookies.get('userID');
-  // console.log("pranshu",cookieData);
-  useEffect(()=>{
-    fetch(`http://localhost:5000/api/users/getuser/${cookieData}`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-      return response.json();
-    })
-    .then(data => {
-  
-      setprofiledata(data)
-     
-      // console.log("stdata",data);
-      
-    })
-    .catch(error => {
-     
-      console.error(error);
-     
-    });
-  },[]
-  )
-  console.log("stdata",profiledata);
+  const navigate = useNavigate(); // Move the declaration to the top
+  // const res = await axios.get('http://localhost:5000/api/user/upload/post/get', {
+  const [data, setData] = useState();
 
-  const navigate = useNavigate();
+  const getimage = async () => {
+    try {
+      const res = await axios.get('http://localhost:5000/api/user/post', {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      console.log(res);
+      localStorage.setItem('userDetails', JSON.stringify(res.data));
+      setData(res.data);
+    } catch (err) {
+      console.log(err);
+      if (err.request.status === 500) {
+        navigate('/signin');
+      }
+    }
+  };
+
+  useEffect(() => {
+    getimage();
+  }, []);
+
+  console.log(data);
+
+  
   return (
     <div>
+      <div className="homepage-box-container">
+                <div>
+                    <div className="homepage-navbar">
+                        <Navbar/>
+                    </div>
+                </div>
+        </div>
       <div>
         <div className="homesubcontainer">
           <div className="Profilerightbar">
             <div className="subProfilerightbar">
               <div>
                 <img
-                  src={profiledata && profiledata.ppLink}
+                  src={data && data.ppLink}
                   style={{
                     width: "150px",
                     height: "150px",
@@ -58,7 +63,7 @@ export default function Profile() {
               </div>
               <div>
                 <div style={{ display: "flex", alignItems: "center" }}>
-                  <p style={{ marginLeft: 100 }}>{profiledata && profiledata.userName}</p>
+                  <p style={{ marginLeft: 100 }}>{data && data.userName}</p>
                   <button
                     style={{
                       paddingLeft: 10,
@@ -82,7 +87,7 @@ export default function Profile() {
                 </div>
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <p style={{ marginLeft: 100, marginTop: 10 }}>
-                {profiledata && profiledata.bio}
+                {data && data.bio}
                   </p>
                 </div>
               </div>

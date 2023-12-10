@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
-import "./LoginPage.css"
+import React, { useState , useEffect } from "react";
 import slide1 from "../src/photos/slide1.jpg"
 import slide2 from "../src/photos/slide2.jpg"
 import slide3 from "../src/photos/slide3.jpg"
@@ -10,51 +9,53 @@ import dark from "../src/photos/insta dark.png"
 import facebook from "../src/photos/facbook.png"
 import pic3 from "../src/photos/pic3.png"
 import pic2 from "../src/photos/pic2.png"
-import { useNavigate } from 'react-router-dom';
-import { useToast } from '@chakra-ui/react';
+import { useRef } from "react";
+
+import {useNavigate } from "react-router-dom";
 
 import axios from "axios";
+import { useToast } from "@chakra-ui/react";
+const Signup = ()=>{
 
-const LoginPage = () => { 
+    const toast = useToast();
+  const toastIdRef = useRef();
+  const navigate = useNavigate();
 
-  const [data, setData] = useState({
-    userName: "",
-    password: "",
-  });
+    const [data, setData] = useState({
+        userName: "",
+        fullname: "",
+        email: "",
+        password: "",
+        bio:"",
+        gender:""
+      });
 
-  const toast = useToast();
-  const toastIdRef=useRef();
 
-  const handleSignIn = async()=>{
-    try{
-      const res = await axios.post('http://localhost:5000/api/user/login',
-      data,{
-        headers:{"content-type":"application/json"}
-      })
-      
-      if(res.data.error)toastIdRef.current = toast({description:res.data.error,status:'error'})
-      else{
-        toastIdRef.current = toast({description:"Logged In",status:'success!'})
-        navigate('/homepage')
-        if(res.data.token)
-        localStorage.setItem("token",res.data.token)
-        
-      }
-      console.log(res);
-    }
-    catch (err) {
-      toastIdRef.current = toast({ description: err.message, status: 'error' })
-    }
-  }
-  
+      const handleSignUp = async () => {
+        try {
+          const res = await axios.post("http://localhost:5000/api/user/register", data, {
+            headers: { "Content-Type": "application/json" },
+          });
+          console.log(res);
+          if (res.data.error)
+            toastIdRef.current = toast({
+              description: res.data.error,
+              status: "error",
+            });
+          else {
+            toastIdRef.current = toast({
+              description: "Account created successfully",
+              status: "success",
+            });
+            navigate("/");
+            // localStorage.setItem("token", res.data.token)
+          }
+        } catch (err) {
+          toastIdRef.current = toast({ description: err.message, status: "error" });
+        }
+      };
 
-  useEffect(()=>{
-    handleSignIn()
-  },[])
-
-  
-
-  const [slideIndex, setSlideIndex] = useState(0);
+      const [slideIndex, setSlideIndex] = useState(0);
   const [isDarkMode, setIsDarkMode] = useState(false);
  
 
@@ -71,21 +72,12 @@ const LoginPage = () => {
     return () => clearInterval(interval);
   }, [slideIndex]);
 
-  
+  useEffect(()=>{
+    handleSignUp()
+  },[])
 
-  const navigate= useNavigate();
-
- 
-
-  const handleDarkModeToggle = (e) => {
-    e.preventDefault();
-    setIsDarkMode(prevState => !prevState);
-  };
-
- 
-
-  return (
-    <div className={`container ${isDarkMode ? 'dark' : ''}`}>
+    return(
+        <div className={`container ${isDarkMode ? 'dark' : ''}`}>
       <div className="main-container">
         <div className="main-content">
           <div className="slide-container">
@@ -107,22 +99,46 @@ const LoginPage = () => {
                 <div className="form-group">
                   <div className="animate-input">
                    
-                    <input type="text" name="username" value={data.userName} onChange={(e)=> setData({...data,userName:e.target.value})} placeholder={"Phone number, username or email"} />
+                    <input type="text" name="username" value={data.fullname} onChange={(e)=> setData({...data,fullname:e.target.value})} placeholder={"full name"} />
                   </div>
                 </div>
                 <div className="form-group">
                   <div className="animate-input">
                    
-                    <input type="password" name="password" value={data.password} onChange={(e)=> setData({...data,password:e.target.value})} placeholder={"Password"} />
-                    <button>Show</button>
+                    <input type="text" name="username" value={data.userName} onChange={(e)=> setData({...data,userName:e.target.value})} placeholder={"user name"} />
+                  </div>
+                </div>
+                <div className="form-group">
+                  <div className="animate-input">
+                   
+                    <input type="text" name="username" value={data.email} onChange={(e)=> setData({...data,email:e.target.value})} placeholder={"email"} />
+                  </div>
+                </div>
+                <div className="form-group">
+                  <div className="animate-input">
+                   
+                    <input type="text" name="username" value={data.password} onChange={(e)=> setData({...data,password:e.target.value})} placeholder={"password"} />
+                  </div>
+                </div>
+                <div className="form-group">
+                  <div className="animate-input">
+                   
+                    <input type="text" name="username" value={data.bio} onChange={(e)=> setData({...data,bio:e.target.value})} placeholder={"bio"} />
+                  </div>
+                </div>
+                <div className="form-group">
+                  <div className="animate-input">
+                   
+                    <input type="password" name="password" value={data.gender} onChange={(e)=> setData({...data,gender:e.target.value})} placeholder={"gender"} />
+                    
                   </div>
                 </div>
                 <div className="btn-group">
                   <button className="btn-login" id="signin-btn" 
          
-                  onClick={handleSignIn}
+                  onClick={handleSignUp}
                   >
-                    Log In
+                   Sign Up
                   </button>
                 </div>
                 <div className="divine">
@@ -144,8 +160,8 @@ const LoginPage = () => {
               </div>
             </div>
             <div className="box goto">
-              <p onClick={()=>navigate("/signup")}>
-                Don't have an account?Sign up
+              <p onClick={()=>navigate("/")}>
+                Sign In
               </p>
             </div>
 
@@ -175,16 +191,12 @@ const LoginPage = () => {
           <a href="https://www.instagram.com/directory/profiles/">Top Accounts</a>
           <a href="https://www.instagram.com/directory/hashtags/">Hashtags</a>
           <a href="https://www.instagram.com/explore/locations/">Locations</a>
-          <a href="#" id="darkmode-toggle" onClick={handleDarkModeToggle}>
-            <b>{isDarkMode ? 'Lightmode' : 'Darkmode'}</b>
-          </a>
         </div>
         <div className="copyright">
           © 2021 Instagram from Facebook
         </div>
       </div>
     </div>
-  );
-};
-
-export default LoginPage;
+    )
+}
+export default Signup;

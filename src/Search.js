@@ -1,4 +1,5 @@
 import React,{useState,useEffect} from "react";
+import Navbar from "./Navbar";
 
 import "./Search.css"
 const Search = ()=>{
@@ -13,6 +14,13 @@ const Search = ()=>{
 
     return(
         <div>
+          <div className="homepage-box-container">
+                <div>
+                    <div className="homepage-navbar">
+                        <Navbar/>
+                    </div>
+                </div>
+        </div>
         <div></div>
         <div className="image-gallery">
             {reels && reels.map((e)=>{

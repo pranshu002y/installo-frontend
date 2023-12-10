@@ -26,24 +26,7 @@ function Layout() {
                 </div>
         </div>
         
-            <Routes>
-                
-                <Route index element={<HomePage/>} />
-                <Route path="/" element={<HomePage/>} />
-                <Route path="/direct" element={<MessagesPage/>}/>
-                <Route path="/direct/new" element={<SendMessageBox/>}/>
-                <Route path="/direct/inbox/" element={<MessageArea/>}/>
-                <Route path="/create2" element={<Create2/>}/>
-                <Route path="/homepage/loginpage" element={<LoginPage/>}/>
-                <Route path ="/homepage/search" element={<Search/>}/>
-                <Route path="homepage/profile" element={<Profile/>}/>
-                <Route path="homepage/explore" element={<Explore/>}/>
-                <Route path="homepage/reels" element={<Reels/>}/>
-                <Route path="homepage/notifications" element={<Notifications/>}/>
-                <Route path="homepage/create" element={<Create/>}/>
-                <Route path="/" element={<HomePage/>}/>
-            </Routes>
-
+            <HomePage/>
         </div>
     );
 }

@@ -7,22 +7,18 @@ import message_icon from "./photos/icons8-facebook-messenger-256.png"
 import bsdka from "../src/photos/bsdka.jpg"
 import navbar_icon from "./photos/navigation-bar-icon-20.jpg"
 import NavbarItem from "./NavbarItem";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Cookies from 'js-cookie';
 
 const More = ()=>{
 
+    const navigate = useNavigate()
+    const handleLogout = async () => {
+      localStorage.removeItem("token")
+      navigate('/homepage')
+  }
 
-    const [logoutClicked, setLogoutClicked] = useState(false);
 
-    const handleLogout = () => {
-      // Clear cookies
-      document.cookie = "userID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      
-
-      // Reload the page
-      window.location.href = "/homepage/loginpage";
-    };
     
     return(
         
@@ -87,8 +83,8 @@ const More = ()=>{
                     <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" x1="12.003"
                           x2="12.003" y1="6.545" y2="17.455"></line>
                 </NavbarItem></Link>
-                <Link to="/homepage/loginpage">
-                <div><img className="profile_photo_small" src={bsdka} alt="logo"/><button>LogOut</button></div></Link>
+                <Link>
+                <div><img className="profile_photo_small" src={bsdka} alt="logo"/><button onClick={handleLogout}>LogOut</button></div></Link>
                 
             </div>
       </div>
